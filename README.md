@@ -35,30 +35,77 @@ A centralized, interactive dashboard was required to automate performance tracki
 ---
 
 ## 🗂️ Data Source  
-- Operator activity and performance logs extracted from **Microsoft SQL Server**  
-- Supplementary datasets from **Excel/CSV files** (shift schedules, operator info)  
+- **Production and downtime logs** extracted from **Microsoft SQL Server** (primary source for `Downtime Line` fact table)  
+- Supplementary datasets from **Excel/CSV files**, including:  
+  - **Product details** (batch time, size)  
+  - **Operator records** (operator names and IDs)  
+  - **Downtime factor descriptions** and **operator error classifications**  
+  - **Calendar table** for time-based aggregation  
 
 ---
 
 ## 🔄 Data Transformation  
-- Cleaned and standardized data using **Power Query**  
-- Removed null values and corrected data types for consistency  
-- Calculated key fields including:  
-  - `Actual Work Time`  
-  - `Minimum Required Time`  
-  - `Downtime %`  
-- Combined multiple data sources into a unified fact table for efficiency reporting  
+- Performed data cleaning and integration using **Power Query**  
+- Standardized field names and data types across all source tables  
+- Removed null and duplicate records to ensure data quality  
+- Established relational keys (`ProductID`, `OperatorID`, `FactorID`, `Date`) for model linking  
+- Created calculated fields to enhance performance analysis, including:  
+  - `ActualBatchTime (Min)` — total runtime per batch  
+  - `DowntimePerMin` — downtime per minute  
+  - `Min Batch Time` — standard minimum batch duration  
+  - `Efficiency %` — ratio of actual performance vs. expected performance  
+- Merged multiple source tables into a consolidated **FactDowntimeLine** table to support efficiency and downtime reporting  
+
+---
+ 
 
 ---
 
 ## 🧱 Data Modeling  
-Implemented a **Star Schema** design for optimized querying and analysis:  
+This data model supports key performance insights such as:
+- Total and average **downtime per operator**
+- **Efficiency trends** by product, date, and factor
+- Root-cause analysis using **downtime factors** and **operator errors**
 
-**Fact Table:**  
-- `FactOperatorPerformance` — containing work time, downtime, and efficiency data  
+The model follows a **Star Schema architecture** to ensure optimized querying and scalable analytics within Power BI.
 
-**Dimension Tables:**  
-- `DimOperator`, `DimDate`, `DimShift`  
+<p align="center">
+  <img src="./DataModel.png" width="50%">
+</p>
+
+---
+
+## 🗂 Fact Table
+
+### **FactDowntimeLine**
+Stores key production metrics and links to all dimension tables.
+
+| Column | Description |
+|:--------|:-------------|
+| `ProductID` | Links to Product dimension |
+| `OperatorID` | Links to Operator dimension |
+| `FactorID` | Links to Downtime Factor dimension |
+| `Operator Error` | Links to Operator Error dimension |
+| `Productivity Date` | Links to Date dimension |
+| `ActualBatchTime (Min)` | Actual production time in minutes |
+| `DowntimePerMin` | Downtime per minute |
+| `Min Batch Time` | Minimum expected batch time |
+| `Batch` | Batch identifier |
+| `Start Time`, `End Time` | Batch runtime details |
+
+---
+
+## 🧩 Dimension Tables
+
+| Table | Description |
+|:--------|:-------------|
+| **DimProduct** | Product attributes such as name, size, and minimum batch time |
+| **DimOperator** | Operator details for performance tracking |
+| **DimDowntimeFactor** | Categorization of downtime causes |
+| **DimOperatorError** | Classification of operator errors |
+| **DimDate** | Calendar structure for time-based analysis |
+
+---
 
 **Key DAX Measures:**  
 - **Efficiency Rate** = DIVIDE([Minimum Time], [Actual Time]) * 100  
@@ -74,17 +121,31 @@ Implemented a **Star Schema** design for optimized querying and analysis:
 
 The **Operator Efficiency Dashboard** provides an interactive and data-driven view of workforce performance, combining visual storytelling with quantitative analysis.  
 
+<p align="center">
+  <img src="./Dashboard.png" width="60%">
+</p>
+
 ### 🔍 Key Analytical Components  
 
 **1. KPI Overview**  
 - **Total Downtime (hrs):** Tracks the total hours lost to operator or system inefficiencies.  
 - **Efficiency %:** Measures productivity by comparing actual vs. expected work time.  
-- **Actual Work Time (hrs):** Summarizes the total productive time logged by operators.  
+- **Actual Work Time (hrs):** Summarizes the total productive time logged by operators.
+
+<p align="center">
+  <img src="./Operation Performance.png" width="35%">
+</p>
 
 **2. Operator Comparison**  
 - Displays individual **Efficiency Rate** and **Performance Ratio** for each operator.  
 - Operators can be filtered (Charlie, Dee, Dennis, Mac) to analyze personal metrics.  
 - Dynamic ranking cards visualize who performs best based on Efficiency %.  
+
+<p align="center">
+  <img src="./Operator performance.png" width="30%">
+  <img src="./Efficiency Rank.png" width="30%">
+   <img src="./Efficiency Ratio.png" width="30%">
+</p>
 
 **3. Trend and Correlation Analysis**  
 - A combined **bar and line chart** shows *Actual vs. Minimum Work Time* with Efficiency % overlay.  
