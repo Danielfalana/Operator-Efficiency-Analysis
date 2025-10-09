@@ -122,7 +122,7 @@ Stores key production metrics and links to all dimension tables.
 The **Operator Efficiency Dashboard** provides an interactive and data-driven view of workforce performance, combining visual storytelling with quantitative analysis.  
 
 <p align="center">
-  <img src="./Dashboard.png" width="60%">
+  <img src="Dashboard_Visual/Dashboard.png" width="60%">
 </p>
 
 ### 🔍 Key Analytical Components  
@@ -133,7 +133,7 @@ The **Operator Efficiency Dashboard** provides an interactive and data-driven vi
 - **Actual Work Time (hrs):** Summarizes the total productive time logged by operators.
 
 <p align="center">
-  <img src="./Operation Performance.png" width="35%">
+  <img src="Dashboard_Visual/Operation Performance.png" width="35%">
 </p>
 
 **2. Operator Comparison**  
@@ -142,9 +142,9 @@ The **Operator Efficiency Dashboard** provides an interactive and data-driven vi
 - Dynamic ranking cards visualize who performs best based on Efficiency %.  
 
 <p align="center">
-  <img src="./Operator performance.png" width="30%">
-  <img src="./Efficiency Rank.png" width="30%">
-   <img src="./Efficiency Ratio.png" width="30%">
+  <img src="Dashboard_Visual/Operator performance.png" width="30%">
+  <img src="Dashboard_Visual/Efficiency Rank.png" width="30%">
+   <img src="Dashboard_Visual/Efficiency Ratio.png" width="30%">
 </p>
 
 **3. Trend and Correlation Analysis**  
