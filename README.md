@@ -124,7 +124,7 @@ The **Operator Efficiency Dashboard** provides an interactive and data-driven vi
 </p>
 
 
-#### Click here     [![Power BI](https://img.shields.io/badge/Power_BI-F2C80F?style=for-the-badge&logo=power-bi&logoColor=white)](https://app.powerbi.com/reportEmbed?reportId=f11b653c-5c3b-4205-a933-2eefbe664079&autoAuth=true&ctid=b0b44356-7ab8-48f0-a149-f853ac286112)
+#### Click here     [![Power BI](https://img.shields.io/badge/Power_BI-F2C80F?style=for-the-badge&logo=power-bi&logoColor=white)](https://app.powerbi.com/view?r=eyJrIjoiMWUxYzMyNGMtNWU3OC00YTM0LWE1MmItMzI3MzM4NGE5YzgwIiwidCI6IjliNzM1NzJmLTFmN2UtNGEwMy04ZTE1LTM4MzNkYjQxNmYwYyJ9)
 
 ---
 
